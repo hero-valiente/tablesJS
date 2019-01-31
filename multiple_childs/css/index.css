@@ -1,7 +1,14 @@
-td.details-control {
-    background: url('http://www.datatables.net/examples/resources/details_open.png') no-repeat center center;
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+td.details-control::before {    
+    /*background: url('http://www.datatables.net/examples/resources/details_open.png') no-repeat center center;*/
     cursor: pointer;
+    color:#000;
+    font-family: "FontAwesome"; /* This is the correct font-family*/
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    content: '\f107';
 }
-tr.shown td.details-control {
-    background: url('http://www.datatables.net/examples/resources/details_close.png') no-repeat center center;
+tr.shown td.details-control::before {
+    content: '\f106'
 }

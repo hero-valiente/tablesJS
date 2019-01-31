@@ -30,6 +30,7 @@ function evalJSon(myJson){
     
     var type;
     for(var item in myJson){
+        console.log(item)
         var tableData = {};
         type = typeof myJson[item];
         tableData.descripcion = item;
@@ -37,6 +38,7 @@ function evalJSon(myJson){
             tableData.valor =  myJson[item];
         }else if(myJson[item]["nombre"] != null){
             tableData.valor = myJson[item]["nombre"];
+            
         }else{
             tableData.valor = "ver detalle";
         }
@@ -45,24 +47,38 @@ function evalJSon(myJson){
     return arrayTableData;
 }
 
+function addDetailControl( myJson){
+    var i = 0;
+    for(var item in myJson){
+        if(typeof myJson[item] == "object"){
+            var cell = table.column(2).nodes()[i];
+            $(cell).addClass('details-control');
+        }
+        i++;
+    }
+}
+
 var gRow;
+var table;
 $(function () {
     tableData = evalJSon(myJson);
 
-      var table = $('#example').DataTable({
+      table = $('#example').DataTable({
           data : tableData,
-          columns: [
-            {
-                "className":      'details-control',
-                "orderable":      false,
-                "data":           null,
-                "defaultContent": ''
-            },
+          columns: [            
             { data: "descripcion" },
             { data: "valor" },
+            {
+            //    "className":      'details-control',
+                "data":           null,
+                "defaultContent": '',
+                "width": "5%"
+            },
         ],
+        ordering: false
 
       });
+      addDetailControl( myJson);
       // Add event listener for opening and closing details
       $('#example').on('click', 'td.details-control', function () {
           var tr = $(this).closest('tr');
